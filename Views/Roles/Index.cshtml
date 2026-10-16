@@ -1,0 +1,31 @@
+@model IEnumerable<VacationManager.Models.Role>
+@{
+    ViewData["Title"] = "Роли";
+}
+<h1>Роли</h1>
+<p>
+    <a asp-action="Create" class="btn btn-success">+ Нова роля</a>
+</p>
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Име</th>
+            <th>Брой потребители</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>@role.Users.Count</td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@role.Id" class="btn btn-sm btn-outline-primary">Детайли</a>
+                    <a asp-action="Edit" asp-route-id="@role.Id" class="btn btn-sm btn-outline-warning">Редакция</a>
+                    <a asp-action="Delete" asp-route-id="@role.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

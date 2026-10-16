@@ -1,0 +1,80 @@
+@model IEnumerable<VacationManager.Models.Project>
+@{
+    ViewData["Title"] = "Проекти";
+    var isCeo = (bool)ViewBag.IsCeo;
+}
+<h1>Проекти</h1>
+@if (isCeo)
+{
+    <p><a asp-action="Create" class="btn btn-success">+ Нов проект</a></p>
+}
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-auto">
+        <label class="form-label">Търсене по</label>
+        <select name="searchBy" class="form-select">
+            <option value="name" selected="@(ViewBag.SearchBy == "name")">име</option>
+            <option value="description" selected="@(ViewBag.SearchBy == "description")">описание</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <label class="form-label">Стойност</label>
+        <input type="text" name="search" value="@ViewBag.Search" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <label class="form-label">Записи на страница</label>
+        <select name="pageSize" class="form-select">
+            @foreach (var size in new[] { 10, 25, 50 })
+            {
+                <option value="@size" selected="@(ViewBag.PageSize == size)">@size</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Филтрирай</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Изчисти</a>
+    </div>
+</form>
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Име</th>
+            <th>Описание</th>
+            <th>Екипи</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model)
+        {
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.Description</td>
+                <td>@project.Teams.Count</td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@project.Id" class="btn btn-sm btn-outline-primary">Детайли</a>
+                    @if (isCeo)
+                    {
+                        <a asp-action="Edit" asp-route-id="@project.Id" class="btn btn-sm btn-outline-warning">Редакция</a>
+                        <a asp-action="Delete" asp-route-id="@project.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.Page <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-search="@ViewBag.Search" asp-route-searchBy="@ViewBag.SearchBy" asp-route-page="@(ViewBag.Page - 1)" asp-route-pageSize="@ViewBag.PageSize">Предишна</a>
+        </li>
+        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == (int)ViewBag.Page ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-search="@ViewBag.Search" asp-route-searchBy="@ViewBag.SearchBy" asp-route-page="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.Page >= (int)ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-search="@ViewBag.Search" asp-route-searchBy="@ViewBag.SearchBy" asp-route-page="@(ViewBag.Page + 1)" asp-route-pageSize="@ViewBag.PageSize">Следваща</a>
+        </li>
+    </ul>
+</nav>

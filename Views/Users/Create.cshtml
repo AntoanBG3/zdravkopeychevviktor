@@ -1,0 +1,54 @@
+@model VacationManager.Controllers.UserForm
+@{
+    var roles = (IEnumerable<VacationManager.Models.Role>)ViewBag.Roles;
+    var teams = (IEnumerable<VacationManager.Models.Team>)ViewBag.Teams;
+    ViewData["Title"] = "Нов потребител";
+}
+<h1>Нов потребител</h1>
+<div class="col-md-6">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Username" class="form-label"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="RoleId" class="form-label"></label>
+            <select asp-for="RoleId" class="form-select">
+                @foreach (var role in roles)
+                {
+                    <option value="@role.Id" selected="@(ViewBag.SelectedRoleId == role.Id)">@role.Name</option>
+                }
+            </select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="TeamId" class="form-label"></label>
+            <select asp-for="TeamId" class="form-select">
+                <option value="">— без екип —</option>
+                @foreach (var team in teams)
+                {
+                    <option value="@team.Id" selected="@(ViewBag.SelectedTeamId == team.Id)">@team.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Запиши</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>
+    </form>
+</div>

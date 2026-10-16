@@ -1,0 +1,29 @@
+@model VacationManager.Models.Team
+@{
+    var projects = (IEnumerable<VacationManager.Models.Project>)ViewBag.Projects;
+    ViewData["Title"] = "Редакция на екип";
+}
+<h1>Редакция на екип</h1>
+<div class="col-md-6">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ProjectId" class="form-label">Проект</label>
+            <select asp-for="ProjectId" class="form-select">
+                <option value="">— без проект —</option>
+                @foreach (var project in projects)
+                {
+                    <option value="@project.Id" selected="@(ViewBag.SelectedProjectId == project.Id)">@project.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Запиши</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>
+    </form>
+</div>

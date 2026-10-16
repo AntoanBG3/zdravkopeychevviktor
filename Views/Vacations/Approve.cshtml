@@ -1,0 +1,97 @@
+@model IEnumerable<VacationManager.Models.VacationRequest>
+@{
+    ViewData["Title"] = "Заявки за одобрение";
+    string TypeLabel(VacationManager.Models.VacationType t) => t switch
+    {
+        VacationManager.Models.VacationType.Paid => "Платен",
+        VacationManager.Models.VacationType.Unpaid => "Неплатен",
+        _ => "Болничен",
+    };
+}
+<h1>Заявки за одобрение</h1>
+
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-auto">
+        <label class="form-label">Покажи заявки, създадени след</label>
+        <input type="date" name="from" value="@ViewBag.From" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <label class="form-label">Записи на страница</label>
+        <select name="pageSize" class="form-select">
+            @foreach (var size in new[] { 10, 25, 50 })
+            {
+                <option value="@size" selected="@(ViewBag.PageSize == size)">@size</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Филтрирай</button>
+        <a asp-action="Approve" class="btn btn-outline-secondary">Изчисти</a>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Заявител</th>
+            <th>Екип</th>
+            <th>Тип</th>
+            <th>От</th>
+            <th>До</th>
+            <th>Създадена на</th>
+            <th>Половин ден</th>
+            <th>Прикачен файл</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.Requester.FirstName @request.Requester.LastName</td>
+                <td>@(request.Requester.Team?.Name ?? "-")</td>
+                <td>@TypeLabel(request.Type)</td>
+                <td>@request.FromDate.ToShortDateString()</td>
+                <td>@request.ToDate.ToShortDateString()</td>
+                <td>@request.CreatedOn.ToShortDateString()</td>
+                <td>@(request.HalfDay ? "да" : "не")</td>
+                <td>
+                    @if (request.SickNoteData != null)
+                    {
+                        <a asp-action="DownloadNote" asp-route-id="@request.Id">Свали файла</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </td>
+                <td class="text-end">
+                    <form asp-action="ApproveRequest" asp-route-id="@request.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-success">Одобри</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr><td colspan="9" class="text-center text-muted">Няма заявки за одобрение.</td></tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.Page <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Approve" asp-route-from="@ViewBag.From" asp-route-page="@(ViewBag.Page - 1)" asp-route-pageSize="@ViewBag.PageSize">Предишна</a>
+        </li>
+        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == (int)ViewBag.Page ? "active" : "")">
+                <a class="page-link" asp-action="Approve" asp-route-from="@ViewBag.From" asp-route-page="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.Page >= (int)ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Approve" asp-route-from="@ViewBag.From" asp-route-page="@(ViewBag.Page + 1)" asp-route-pageSize="@ViewBag.PageSize">Следваща</a>
+        </li>
+    </ul>
+</nav>

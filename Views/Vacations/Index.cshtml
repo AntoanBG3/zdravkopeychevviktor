@@ -1,0 +1,107 @@
+@model IEnumerable<VacationManager.Models.VacationRequest>
+@{
+    ViewData["Title"] = "Моите заявки за отпуск";
+    string TypeLabel(VacationManager.Models.VacationType t) => t switch
+    {
+        VacationManager.Models.VacationType.Paid => "Платен",
+        VacationManager.Models.VacationType.Unpaid => "Неплатен",
+        _ => "Болничен",
+    };
+}
+<h1>Моите заявки за отпуск</h1>
+<p><a asp-action="Create" class="btn btn-success">+ Нова заявка</a></p>
+
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-auto">
+        <label class="form-label">Покажи заявки, създадени след</label>
+        <input type="date" name="from" value="@ViewBag.From" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <label class="form-label">Записи на страница</label>
+        <select name="pageSize" class="form-select">
+            @foreach (var size in new[] { 10, 25, 50 })
+            {
+                <option value="@size" selected="@(ViewBag.PageSize == size)">@size</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Филтрирай</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Изчисти</a>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Тип</th>
+            <th>От</th>
+            <th>До</th>
+            <th>Създадена на</th>
+            <th>Половин ден</th>
+            <th>Одобрена</th>
+            <th>Прикачен файл</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@TypeLabel(request.Type)</td>
+                <td>@request.FromDate.ToShortDateString()</td>
+                <td>@request.ToDate.ToShortDateString()</td>
+                <td>@request.CreatedOn.ToShortDateString()</td>
+                <td>@(request.HalfDay ? "да" : "не")</td>
+                <td>
+                    @if (request.Approved)
+                    {
+                        <span class="badge bg-success">Одобрена</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Очаква</span>
+                    }
+                </td>
+                <td>
+                    @if (request.SickNoteData != null)
+                    {
+                        <a asp-action="DownloadNote" asp-route-id="@request.Id">Свали файла</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">—</span>
+                    }
+                </td>
+                <td class="text-end">
+                    @if (!request.Approved)
+                    {
+                        <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-sm btn-outline-warning">Редакция</a>
+                        <a asp-action="Delete" asp-route-id="@request.Id" class="btn btn-sm btn-outline-danger">Изтрий</a>
+                    }
+                </td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr><td colspan="8" class="text-center text-muted">Няма заявки.</td></tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.Page <= 1 ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-from="@ViewBag.From" asp-route-page="@(ViewBag.Page - 1)" asp-route-pageSize="@ViewBag.PageSize">Предишна</a>
+        </li>
+        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == (int)ViewBag.Page ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-from="@ViewBag.From" asp-route-page="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.Page >= (int)ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-action="Index" asp-route-from="@ViewBag.From" asp-route-page="@(ViewBag.Page + 1)" asp-route-pageSize="@ViewBag.PageSize">Следваща</a>
+        </li>
+    </ul>
+</nav>

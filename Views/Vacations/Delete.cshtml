@@ -1,0 +1,22 @@
+@model VacationManager.Models.VacationRequest
+@{
+    ViewData["Title"] = "Изтриване на заявка";
+}
+<h1>Изтриване на заявка за отпуск</h1>
+<h4 class="text-danger">Сигурни ли сте, че искате да изтриете тази заявка?</h4>
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Тип</dt>
+        <dd class="col-sm-9">@Model.Type</dd>
+        <dt class="col-sm-3">От</dt>
+        <dd class="col-sm-9">@Model.FromDate.ToShortDateString()</dd>
+        <dt class="col-sm-3">До</dt>
+        <dd class="col-sm-9">@Model.ToDate.ToShortDateString()</dd>
+        <dt class="col-sm-3">Одобрена</dt>
+        <dd class="col-sm-9">@(Model.Approved ? "да" : "не")</dd>
+    </dl>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Изтрий</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>
+    </form>
+</div>

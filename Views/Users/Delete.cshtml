@@ -1,0 +1,20 @@
+@model VacationManager.Models.User
+@{
+    ViewData["Title"] = "Изтриване на потребител";
+}
+<h1>Изтриване на потребител</h1>
+<h4 class="text-danger">Сигурни ли сте, че искате да изтриете този потребител?</h4>
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Потребителско име</dt>
+        <dd class="col-sm-9">@Model.Username</dd>
+        <dt class="col-sm-3">Име</dt>
+        <dd class="col-sm-9">@Model.FirstName @Model.LastName</dd>
+        <dt class="col-sm-3">Роля</dt>
+        <dd class="col-sm-9">@Model.Role.Name</dd>
+    </dl>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Изтрий</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>
+    </form>
+</div>

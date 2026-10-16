@@ -1,0 +1,82 @@
+@model VacationManager.Models.Team
+@{
+    var unassigned = (IEnumerable<VacationManager.Models.User>)ViewBag.UnassignedUsers;
+    ViewData["Title"] = "Детайли за екип";
+}
+<h1>Екип: @Model.Name</h1>
+<div class="card mb-3" style="max-width: 40rem;">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Проект</dt>
+            <dd class="col-sm-8">@(Model.Project?.Name ?? "-")</dd>
+            <dt class="col-sm-4">Лидер</dt>
+            <dd class="col-sm-8">@(Model.Leader != null ? $"{Model.Leader.FirstName} {Model.Leader.LastName}" : "няма избран лидер")</dd>
+            <dt class="col-sm-4">Брой членове</dt>
+            <dd class="col-sm-8">@Model.Members.Count</dd>
+        </dl>
+    </div>
+</div>
+
+<h4>Разработчици в екипа</h4>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (Model.Members.Count == 0)
+{
+    <p class="text-muted">Екипът няма членове.</p>
+}
+else
+{
+    <table class="table table-striped align-middle" style="max-width: 50rem;">
+        <thead>
+            <tr><th>Потребителско име</th><th>Име</th><th>Роля</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var member in Model.Members)
+            {
+                <tr>
+                    <td>@member.Username</td>
+                    <td>@member.FirstName @member.LastName</td>
+                    <td>@member.Role.Name @(Model.LeaderId == member.Id ? " (лидер)" : "")</td>
+                    <td class="text-end">
+                        @if (Model.LeaderId != member.Id)
+                        {
+                            <form asp-action="SetLeader" asp-route-id="@Model.Id" asp-route-userId="@member.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-success">Направи лидер</button>
+                            </form>
+                            <form asp-action="RemoveMember" asp-route-id="@Model.Id" asp-route-userId="@member.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Премахни</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>Добави член</h4>
+@if (unassigned.Any())
+{
+    <form asp-action="AddMember" asp-route-id="@Model.Id" method="post" class="row g-2 align-items-end" style="max-width: 40rem;">
+        <div class="col">
+            <select name="userId" class="form-select">
+                @foreach (var user in unassigned)
+                {
+                    <option value="@user.Id">@user.Username (@user.FirstName @user.LastName)</option>
+                }
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Добави</button>
+        </div>
+    </form>
+}
+else
+{
+    <p class="text-muted">Няма потребители без екип.</p>
+}
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-outline-secondary">Обратно</a>
+</div>

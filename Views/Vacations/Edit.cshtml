@@ -1,0 +1,59 @@
+@model VacationManager.Controllers.VacationForm
+@{
+    ViewData["Title"] = "Редакция на заявка";
+    var id = (int)ViewBag.Id;
+    var hasSickNote = (bool)ViewBag.HasSickNote;
+}
+<h1>Редакция на заявка за отпуск</h1>
+<div class="col-md-6">
+    <form asp-action="Edit" asp-route-id="@id" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Type" class="form-label"></label>
+            <select asp-for="Type" asp-items="VacationManager.Controllers.VacationForm.TypeOptions" class="form-select" id="vacationType"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FromDate" class="form-label"></label>
+            <input asp-for="FromDate" class="form-control" type="date" />
+            <span asp-validation-for="FromDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ToDate" class="form-label"></label>
+            <input asp-for="ToDate" class="form-control" type="date" />
+            <span asp-validation-for="ToDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3 form-check" id="halfDayGroup">
+            <input asp-for="HalfDay" class="form-check-input" type="checkbox" />
+            <label asp-for="HalfDay" class="form-check-label"></label>
+            <span asp-validation-for="HalfDay" class="text-danger d-block"></span>
+        </div>
+        <div class="mb-3" id="sickNoteGroup">
+            <label asp-for="SickNote" class="form-label"></label>
+            <input asp-for="SickNote" class="form-control" type="file" />
+            <span asp-validation-for="SickNote" class="text-danger"></span>
+            @if (hasSickNote)
+            {
+                <small class="text-muted">Вече има прикачен болничен лист (<a asp-action="DownloadNote" asp-route-id="@id">свали</a>). Качете нов, за да го замените.</small>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary">Запиши</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Отказ</a>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+    const typeSelect = document.getElementById('vacationType');
+    const halfDayGroup = document.getElementById('halfDayGroup');
+    const sickNoteGroup = document.getElementById('sickNoteGroup');
+    function updateSickUi() {
+        const isSick = typeSelect.value === '2';
+        halfDayGroup.style.display = isSick ? 'none' : '';
+        sickNoteGroup.style.display = isSick ? '' : 'none';
+        if (isSick) halfDayGroup.querySelector('input').checked = false;
+    }
+    typeSelect.addEventListener('change', updateSickUi);
+    updateSickUi();
+</script>
+}
