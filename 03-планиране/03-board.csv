@@ -1,22 +1,22 @@
-ID,Title,MoSCoW,Points,Sprint
-T-01,Настройка на проекта,Must,3,Sprint 1
-T-02,Модел на данните и миграции,Must,5,Sprint 1
-T-03,Начални данни,Must,2,Sprint 1
-US-01,Вход в системата,Must,5,Sprint 1
-US-02,Списък с ролите,Must,3,Sprint 1
-US-04,Управление на потребителите,Must,5,Sprint 2
-US-14,Ограничаване на достъпа по роли,Must,3,Sprint 2
-US-10,Заявка за платен или неплатен отпуск,Must,5,Sprint 2
-US-06,Управление на екипите,Must,3,Sprint 2
-US-07,Членове и лидер на екип,Must,5,Sprint 2
-US-13,Одобрение на заявки,Must,8,Sprint 3
-US-11,Болничен с прикачен файл,Must,5,Sprint 3
-T-04,Валидация на формите,Must,3,Sprint 3
-T-05,README и документация,Must,2,Sprint 3
-US-12,Редакция и триене на неодобрена заявка,Should,3,Sprint 3
-US-08,Управление на проектите,Should,3,Sprint 3
-US-03,Управление на ролите,Could,3,Won't this time
-US-05,Странициране и филтриране на потребители,Could,5,Won't this time
-US-11-b,Преглед и проверка на болничния файл,Could,5,Won't this time
-US-16,Имейл известия,Could,8,Won't this time
-US-18,Баланс на дните отпуск,Could,8,Won't this time
+ID,Title,MoSCoW,Points,Sprint,ADR
+T-01,Настройка на проекта,Must,3,Sprint 1,04-дизайн/adr/ADR-001-web-framework.md; 04-дизайн/adr/ADR-002-database.md
+T-02,Модел на данните и миграции,Must,5,Sprint 1,04-дизайн/adr/ADR-002-database.md
+T-03,Начални данни,Must,2,Sprint 1,
+US-01,Вход в системата,Must,5,Sprint 1,
+US-02,Списък с ролите,Must,3,Sprint 1,
+US-04,Управление на потребителите,Must,5,Sprint 2,
+US-14,Ограничаване на достъпа по роли,Must,3,Sprint 2,
+US-10,Заявка за платен или неплатен отпуск,Must,5,Sprint 2,
+US-06,Управление на екипите,Must,3,Sprint 2,
+US-07,Членове и лидер на екип,Must,5,Sprint 2,
+US-13,Одобрение на заявки,Must,8,Sprint 3,
+US-11,Болничен с прикачен файл,Must,5,Sprint 3,
+T-04,Валидация на формите,Must,3,Sprint 3,
+T-05,README и документация,Must,2,Sprint 3,
+US-12,Редакция и триене на неодобрена заявка,Should,3,Sprint 3,
+US-08,Управление на проектите,Should,3,Sprint 3,
+US-03,Управление на ролите,Could,3,Won't this time,
+US-05,Странициране и филтриране на потребители,Could,5,Won't this time,
+US-11-b,Преглед и проверка на болничния файл,Could,5,Won't this time,
+US-16,Имейл известия,Could,8,Won't this time,
+US-18,Баланс на дните отпуск,Could,8,Won't this time,
