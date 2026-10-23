@@ -38,3 +38,6 @@ dotnet run
 - Entity Framework Core 9 + SQLite (миграции в `Migrations/`)
 - BCrypt.Net-Next за хеширане на пароли
 - Cookie authentication + ролеви филтър (`RequireRolesAttribute`)
+## Прототип
+* **Figma прототип:** [Рафт – Училищна библиотека (Figma)](https://www.figma.com/file/...)
+* **Хартиени скици и описание:** [docs/04-ui-prototype.md](docs/04-ui-prototype.md)
