@@ -38,10 +38,16 @@ dotnet run
 - Entity Framework Core 9 + SQLite (миграции в `Migrations/`)
 - BCrypt.Net-Next за хеширане на пароли
 - Cookie authentication + ролеви филтър (`RequireRolesAttribute`)
-## Прототип
-* **Figma прототип:** [Рафт – Училищна библиотека (Figma)](https://www.figma.com/file/...)
-* **Хартиени скици и описание:** [docs/04-ui-prototype.md](docs/04-ui-prototype.md)
 
-## Учебни задачи
+## Документация на VacationManager
 
-- [Подаване на заявление за служебна бележка](04-дизайн/02-подаване-на-заявление.md) – работен лист с поток, три екрана и интерактивен прототип.
+| Етап | Материали |
+|---|---|
+| 1. Изисквания | [Изисквания](docs/vacation-manager/01-requirements/requirements.md), [интервю с клиента](docs/vacation-manager/01-requirements/client-interview.md) |
+| 2. Планиране | [Беклог и спринтове](docs/vacation-manager/02-planning/backlog.md), [CSV за дъската](docs/vacation-manager/02-planning/board.csv) |
+| 3. Дизайн | [Избор на технологии](docs/vacation-manager/03-design/technology-selection.md), [архитектура и диаграми](docs/vacation-manager/03-design/architecture.md), [архитектурни решения (ADR)](docs/vacation-manager/03-design/adr/) |
+
+## Самостоятелни учебни задачи
+
+- [Подаване на заявление за служебна бележка](docs/exercises/school-certificate/README.md) – работен лист, поток, три екрана и интерактивен прототип.
+- [„Рафт – Училищна библиотека“](docs/exercises/school-library/README.md) – описание на UI прототипа за урок 11.

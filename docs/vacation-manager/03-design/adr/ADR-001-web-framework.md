@@ -16,4 +16,4 @@ ASP.NET Core MVC върху .NET 10 (LTS), изгледи с Razor и Bootstrap 
 (−) всеки компютър се нуждае от .NET 10 SDK; по-старите SDK (8, 9) не компилират `net10.0`
 
 ## Алтернативи
-ASP.NET Core Razor Pages (4,10), React + ASP.NET Core Web API (3,55), Java Spring Boot + Thymeleaf (3,05) – виж [матрицата](../01-избор-на-технологии.md#2-матрица-на-решенията--уеб-рамка). WinForms/WPF и MAUI отпаднаха, защото не са уеб.
+ASP.NET Core Razor Pages (4,10), React + ASP.NET Core Web API (3,55), Java Spring Boot + Thymeleaf (3,05) – виж [матрицата](../technology-selection.md#2-матрица-на-решенията--уеб-рамка). WinForms/WPF и MAUI отпаднаха, защото не са уеб.

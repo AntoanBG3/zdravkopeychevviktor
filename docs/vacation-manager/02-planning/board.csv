@@ -1,6 +1,6 @@
 ID,Title,MoSCoW,Points,Sprint,ADR
-T-01,Настройка на проекта,Must,3,Sprint 1,04-дизайн/adr/ADR-001-web-framework.md; 04-дизайн/adr/ADR-002-database.md
-T-02,Модел на данните и миграции,Must,5,Sprint 1,04-дизайн/adr/ADR-002-database.md
+T-01,Настройка на проекта,Must,3,Sprint 1,docs/vacation-manager/03-design/adr/ADR-001-web-framework.md; docs/vacation-manager/03-design/adr/ADR-002-database.md
+T-02,Модел на данните и миграции,Must,5,Sprint 1,docs/vacation-manager/03-design/adr/ADR-002-database.md
 T-03,Начални данни,Must,2,Sprint 1,
 US-01,Вход в системата,Must,5,Sprint 1,
 US-02,Списък с ролите,Must,3,Sprint 1,
