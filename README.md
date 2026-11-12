@@ -4,14 +4,15 @@
 
 ## Стартиране
 
+С .NET 10 SDK можете да стартирате приложението от корена на хранилището.
+
 ```bash
-cd VacationManager
-dotnet restore
-dotnet ef database update   # или просто dotnet run – миграциите се прилагат автоматично
-dotnet run
+dotnet run --project src/VacationManager
 ```
 
-Приложението стартира на адрес от профила (по подразбиране https://localhost:5001 / http://localhost:5000).
+Отворете `http://localhost:5295`. При първо стартиране приложението създава локалната SQLite база в папката на проекта, прилага миграциите и зарежда началните данни.
+
+За компилация от корена използвайте `dotnet build`. Изходният код е в [src/VacationManager](src/VacationManager/).
 
 ## Тестови потребители (създават се автоматично при първото стартиране)
 
@@ -34,8 +35,8 @@ dotnet run
 
 ## Технологии
 
-- ASP.NET Core MVC (.NET 10 SDK – компилира и за net8/net9)
-- Entity Framework Core 9 + SQLite (миграции в `Migrations/`)
+- ASP.NET Core MVC (.NET 10)
+- Entity Framework Core 9 + SQLite ([миграции](src/VacationManager/Migrations/))
 - BCrypt.Net-Next за хеширане на пароли
 - Cookie authentication + ролеви филтър (`RequireRolesAttribute`)
 

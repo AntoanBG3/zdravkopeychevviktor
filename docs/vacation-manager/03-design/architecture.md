@@ -236,6 +236,8 @@ builder.Services.AddScoped<IVacationService, VacationService>();
 
 ## 8. Къде стои кодът на всеки
 
+Пътищата към уеб проекта са относителни спрямо [src/VacationManager](../../../src/VacationManager/).
+
 | Член | Работи в папки | Диаграма |
 |---|---|---|
 | Здравко | `Services/VacationService.cs`, `Services/SystemClock.cs`, `Controllers/VacationsController.cs`, `Views/Vacations/` | компонент „Бизнес логика“, класове `VacationService`, `SystemClock` |
